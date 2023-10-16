@@ -11,16 +11,27 @@ struct RegisterView: View {
     @State private var name = ""
     @EnvironmentObject private var userManager: UserManager
     
+    var validation: Bool {
+        name.count > 2
+    }
+    
     var body: some View {
         VStack {
-            TextField("Enter your name", text: $name)
-                .multilineTextAlignment(.center)
+            HStack {
+                TextField("Enter your name", text: $name)
+                    .multilineTextAlignment(.center)
+                    .border(Color.black)
+                Text(name.count.formatted())
+                    .foregroundStyle(validation ? .green : .red)
+            }
+            .padding()
             Button(action: registerUser ) {
                 HStack {
                     Image(systemName: "checkmark.circle")
                     Text("OK")
                 }
             }
+            .disabled(!validation)
         }
     }
     
