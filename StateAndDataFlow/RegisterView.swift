@@ -20,7 +20,6 @@ struct RegisterView: View {
             HStack {
                 TextField("Enter your name", text: $name)
                     .multilineTextAlignment(.center)
-                    .border(Color.black)
                 Text(name.count.formatted())
                     .foregroundStyle(validation ? .green : .red)
             }

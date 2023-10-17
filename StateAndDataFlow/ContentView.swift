@@ -15,17 +15,24 @@ struct ContentView: View {
         VStack {
             Spacer()
             Text("Hi, \(userManager.name)")
+                .font(.system(size: 40))
             Spacer()
             Text(timer.counter.formatted())
                 .font(.largeTitle)
-            
             Spacer()
-            
-            ButtonView(timer: timer)
-            
+            TimerButtonView(timer: timer)
+            Spacer()
+            Button(role: .destructive, action: {
+                userManager.name = ""
+                userManager.isRegister.toggle()
+            }) {
+                Text("Log Out")
+                    .font(.system(size: 30))
+            }
+            .buttonStyle(.borderedProminent)
             Spacer()
         }
-        
+        .padding()
     }
 }
 
@@ -34,7 +41,7 @@ struct ContentView: View {
         .environmentObject(UserManager())
 }
 
-struct ButtonView: View {
+struct TimerButtonView: View {
     @ObservedObject var timer: TimeCounter
     
     var body: some View {
