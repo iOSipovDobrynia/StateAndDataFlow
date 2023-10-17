@@ -11,7 +11,7 @@ struct RegisterView: View {
     @State private var name = ""
     @EnvironmentObject private var userManager: UserManager
     
-    var validation: Bool {
+    private var validation: Bool {
         name.count > 2
     }
     
