@@ -8,20 +8,15 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var name = ""
     @EnvironmentObject private var userManager: UserManager
-    
-    private var validation: Bool {
-        name.count > 2
-    }
     
     var body: some View {
         VStack {
             HStack {
-                TextField("Enter your name", text: $name)
+                TextField("Enter your name", text: $userManager.user.name)
                     .multilineTextAlignment(.center)
-                Text(name.count.formatted())
-                    .foregroundStyle(validation ? .green : .red)
+                Text(userManager.user.name.count.formatted())
+                    .foregroundStyle(userManager.validation ? .green : .red)
             }
             .padding()
             Button(action: registerUser ) {
@@ -30,15 +25,13 @@ struct RegisterView: View {
                     Text("OK")
                 }
             }
-            .disabled(!validation)
+            .disabled(!userManager.validation)
         }
     }
     
     private func registerUser() {
-        if !name.isEmpty {
-            userManager.name = name
-            userManager.isRegister.toggle()
-        }
+        DataManager.shared.save(user: userManager.user)
+        userManager.user.isRegister.toggle()
     }
 }
 
